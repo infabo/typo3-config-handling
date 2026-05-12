@@ -54,15 +54,8 @@ side with the TYPO3 sites configuration files.
 
 TYPO3 9.5 introduced the notion of a site. Sites are configured in yaml files
 stored in `config/sites/<site-identifier>/config.yaml`. This great concept comes
-with some small limitations, that can be overcome by using this package:
+with one small limitation that can be overcome by using this package:
 
-1. Indentation of the yaml files is 2 spaces, which makes reading them hard.
-   This is changed by now using 4 spaces when the configuration files are
-   re-written when using the sites module
-1. While importing other files is possible using the imports feature, the
-   imports feature is limited to import files either from extensions or relative
-   to the TYPO3 main directory (PATH_site). This is fixed by using the more
-   advanced handling of imports relative to the current config file
 1. TYPO3 by default only supports `env` placeholder replacement, which means
    environment dependent site configuration must make use of environment
    variables. To overcome this limitation, with this package it is possible to
@@ -77,15 +70,9 @@ with some small limitations, that can be overcome by using this package:
    With that it is possible to put all environment specific configuration into
    `override.settings.yaml`, without the need to expose some settings in the environment.
 
-To enable this feature, an XCLASS needs to be registered in your main configuration:
-
-```yaml
-SYS:
-    Objects:
-        TYPO3\CMS\Core\Configuration\SiteConfiguration:
-            className: Helhum\TYPO3\ConfigHandling\Typo3SiteConfiguration
-
-```
+This feature is enabled automatically by an event listener when this package is active.
+Existing `SYS.Objects` overrides for `TYPO3\CMS\Core\Configuration\SiteConfiguration`
+must be removed.
 
 ### Encrypting values in configuration files
 
